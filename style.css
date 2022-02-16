@@ -10,6 +10,10 @@ body{
 h1{
     margin:20px;
     margin-top: 55px;
+    /* position: absolute;
+    left:50%;
+    transform: translateX(-100%);
+    top: 55px; */
 }
 
 #header{
@@ -39,4 +43,57 @@ h1{
 
 .post-image{
     width: 90%;
+}
+
+.post-image-small{
+    width: 45%;
+}
+
+@media screen and (max-width: 800px){
+    body{
+        font-family: "DM Sans";
+        background-color: rgb(238, 243, 253);
+        margin: 0;
+    }
+    
+    h1{
+        position: absolute;
+        left: 40px;
+        top: 40px;
+        margin:0px;
+    }
+    
+    #header{
+        position: absolute;
+        width:100vw;
+        height:120px;
+        border:none;
+        border-bottom: solid black 5px;
+    }
+    
+    #content{
+        position:absolute;
+        left:0px;
+        box-sizing: border-box;
+        padding:40px;
+        top:70px;
+        width:100vw;
+        margin-top: 50px;
+    }
+    
+    .post{
+        margin-bottom: 50px;
+        height:auto;
+        width: 90%;
+    }
+    
+    .metadata{
+        font-size: 20px;
+    
+    }
+    
+    .post-image{
+        width: 90%;
+    }
+    
 }
