@@ -22,9 +22,6 @@ var numLayers = 4;
 // FOLIAGE COUNTS
 var numEmergent = 2;
 var numCanopy = 5;
-var numUnderstory = 10;
-var numForestFloor = 25;
-
 
 function setup() {
   let drawing = createCanvas(canvasSize, 650);
@@ -45,7 +42,7 @@ function setup() {
 
     forestType = forestList[Math.floor(random(0,2))]
     // season = seasonList[Math.floor(random(0,3))]
-    numLayers = Math.floor(random(1,5))
+
 
 
   // SET LEAF COLORS
@@ -76,22 +73,9 @@ function setup() {
     leafOpacity = 0.6;
   }
 
-  // DRAW FOREST
-  if (numLayers == 4){
+// DRAW THE FOREST
   drawFoliage(numEmergent, "emergent", forestType);
   drawFoliage(numCanopy, "canopy" , forestType);
-  drawFoliage(numUnderstory, "understory", forestType);
-  drawFoliage(numForestFloor, "forest floor", forestType);
-  } else if (numLayers == 3){
-    drawFoliage(numEmergent, "emergent", forestType);
-    drawFoliage(numCanopy, "canopy" , forestType);
-    drawFoliage(numUnderstory, "understory", forestType);
-  } else if (numLayers == 2){
-    drawFoliage(numCanopy, "canopy" , forestType);
-    drawFoliage(numUnderstory, "understory", forestType);
-  } else if (numLayers == 1){
-    drawFoliage(numUnderstory, "understory", forestType);
-  }
 
 
 
