@@ -16,9 +16,12 @@ leafOpacity;
 var leafType;
 
 // USER INPUT DUMMY VARIABLES
-var season = "fun";
+var season = "summer";
 var forestType = "boreal";
 var numLayers = 4;
+var age = 1;
+var growthFactor;
+var branchFactor;
 
 
 // FOLIAGE COUNTS
@@ -32,16 +35,15 @@ function setup() {
   let drawing = createCanvas(canvasSize, 650);
   drawing.parent("drawing");
   colorMode(HSL);
-  // temperatureInput = createSlider(10, 25, 10);
-  // temperatureInput.position(20, 20);
-  // temperatureInput.parent("inputs");
-  // text('Temperature', temperatureInput.x * 2 + temperatureInput.width, 35).parent("inputs");
   background(225);
 
   // SET METADATA VARIABLES FROM USER INPUTS
     temperature = select("#temperatureInput").value();
     forestType = select("#forestTypeInput").value();
     season = select("#seasonInput").value();
+    age = select("#ageInput").value();
+    growthFactor = age/30;
+    branchFactor = Math.ceil(temperature/10)-2;
 
 
     // RANDOMIZE VARIABLES
@@ -52,9 +54,12 @@ function setup() {
     season = seasonList[Math.floor(random(0,4))]
 
     // PRINT METADATA ON CANVAS
-    text("Temperature: "+temperature, 20, 35);
-    text("Forest Type: "+forestType.toUpperCase(), 20, 55);
-    text("Season: "+season.toUpperCase(), 20, 75);
+    rect(20,20, 200, 120)
+    textFont("Courier New")
+    text("FOREST TYPE: "+forestType, 40, 55);
+    text("SEASON: "+season, 40, 75);
+    text("TEMPERATURE: "+temperature + "˚C", 40, 95);
+    text("AGE: "+age+ " years old", 40, 115);
 
 
   // SET LEAF COLORS
@@ -86,28 +91,44 @@ function setup() {
   }
 
   // DRAW FOREST
+  push()
   drawFoliage(numEmergent, "emergent", forestType);
   drawFoliage(numCanopy, "canopy" , forestType);
   drawFoliage(numUnderstory, "understory", forestType);
   drawFoliage(numForestFloor, "forest floor", forestType);
+  pop()
 
   // REGENERATE FOREST ON BUTTON CLICK
-  // select("#generateButton").onclick = regenerateCanvas();
+  document.getElementById("generateButton").addEventListener("click", function () {
+    regenerateCanvas()
+  })
 
+  // SAVE CANVAS
+  document.getElementById("saveButton").addEventListener("click", function () {
+  saveCanvas('Trees')
+    })
 }
 
 function regenerateCanvas() {
-  console.log("clicked")
   clear();
+  background(225);
   temperature = select("#temperatureInput").value();
   forestType = select("#forestTypeInput").value();
   season = select("#seasonInput").value();
-  // PRINT METADATA ON CANVAS
-  text("Temperature: "+temperature, 20, 35);
-  text("Forest Type: "+forestType.toUpperCase(), 20, 55);
-  text("Season: "+season.toUpperCase(), 20, 75);
+  age = select("#ageInput").value();
+  growthFactor = age * (0.3/70) + 0.8714;
+  branchFactor = Math.ceil(temperature/10)-2;
 
-    // SET LEAF COLORS
+
+  // PRINT METADATA ON CANVAS
+  rect(20,20, 200, 120)
+  text("FOREST TYPE: "+forestType, 40, 55);
+  text("SEASON: "+season, 40, 75);
+  text("TEMPERATURE: "+temperature + "˚C", 40, 95);
+  text("AGE: "+age+ " years old", 40, 115);
+
+
+  // SET LEAF COLORS
     if (season == "fall"){
       minColor = 1;
       maxColor = 60;
@@ -135,10 +156,13 @@ function regenerateCanvas() {
       leafOpacity = 0.4;
     }
 
+  //DRAW FOREST 
+  push()
   drawFoliage(numEmergent, "emergent", forestType);
   drawFoliage(numCanopy, "canopy" , forestType);
   drawFoliage(numUnderstory, "understory", forestType);
   drawFoliage(numForestFloor, "forest floor", forestType);
+  pop()
 }
 
 
@@ -214,7 +238,7 @@ function drawFoliage(amount, type, forestType) {
       leafLightness = 20;
       leafColor = color(random(minColor,maxColor), leafSaturation, leafLightness, leafOpacity)
       for (i=0; i<=amount-1; i++){
-        var position = random(0+300,canvasSize-300);
+        var position = random(0+400,canvasSize-300);
         translate(position, height)
 
         // SET  RULES AND ANGLE RANGE ACCORDING TO FOREST TYPE
@@ -285,7 +309,7 @@ function drawFoliage(amount, type, forestType) {
         
         // DRAW THE TREE
         turtle(position, angleRange[0], angleRange[1], leafType);
-        for (j=0; j<=numIterations; j++){
+        for (j=0; j<=numIterations+branchFactor; j++){
         generate(position, angleRange[0], angleRange[1], leafType)
         }
         
@@ -298,7 +322,7 @@ function drawFoliage(amount, type, forestType) {
       leafLightness = 40;
       leafColor = color(random(minColor,maxColor), leafSaturation, leafLightness, leafOpacity)
       for (i=0; i<=amount-1; i++){
-        var position = random(0+300,canvasSize-300);
+        var position = random(0+400,canvasSize-300);
         translate(position, height)
         
         // SET  RULES AND ANGLE RANGE
@@ -360,13 +384,13 @@ function drawFoliage(amount, type, forestType) {
         }
 
         branchWidth = 3;
-        len = treeHeight;
+        len = treeHeight * growthFactor
         sentence = axiom;
 
         // DRAW THE TREE
 
         turtle(position, angleRange[0], angleRange[1], leafType);
-        for (j=0; j<=numIterations; j++){
+        for (j=0; j<=numIterations + branchFactor; j++){
         generate(position, angleRange[0], angleRange[1], leafType)}
 
       }
@@ -376,7 +400,7 @@ function drawFoliage(amount, type, forestType) {
       leafLightness = 60;
       leafColor = color(random(minColor,maxColor), leafSaturation, leafLightness, leafOpacity)
       for (i=0; i<=amount-1; i++){
-        var position = random(0+300,canvasSize-300);
+        var position = random(0+400,canvasSize-300);
 
         // RESET VARIABLES FOR NEW TREE
         translate(position, height)
@@ -428,12 +452,12 @@ function drawFoliage(amount, type, forestType) {
               leafType = "needle";
           }
         branchWidth = 3;
-        len = treeHeight;
+        len = treeHeight * growthFactor;
         sentence = axiom;
 
 
         turtle(position, angleRange[0], angleRange[1], leafType);
-        for (j=0; j<=numIterations; j++){
+        for (j=0; j<=numIterations + branchFactor; j++){
         generate(position, angleRange[0], angleRange[1], leafType)}
 
       }
@@ -443,7 +467,7 @@ function drawFoliage(amount, type, forestType) {
       leafLightness = 80;
       leafColor = color(random(minColor,maxColor), leafSaturation, leafLightness, leafOpacity)
       for (i=0; i<=amount-1; i++){
-        var position = random(0+300,canvasSize-300);
+        var position = random(0+400,canvasSize-300);
 
         // RESET VARIABLES FOR NEW TREE
 
@@ -494,12 +518,12 @@ function drawFoliage(amount, type, forestType) {
         }
 
         branchWidth = 3;
-        len = treeHeight;
+        len = treeHeight * growthFactor;
         sentence = axiom;
         
 
         turtle(position, angleRange[0], angleRange[1], leafType);
-        for (j=0; j<=numIterations; j++){
+        for (j=0; j<=numIterations + branchFactor; j++){
         generate(position, angleRange[0], angleRange[1], leafType)
         
       }
