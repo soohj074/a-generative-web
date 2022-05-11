@@ -50,19 +50,31 @@ h2{
 #gallery{
   position:absolute;
   top: 650px;
-  width:100vw;
+  width:90vw;
   height:auto;
   border: 1px solid black;
   background-color: rgb(234, 235, 209);
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  justify-content: space-between;
+  align-content: space-around;
   padding-top: 100px;
   padding-bottom: 100px;
+}
+
+#gallery-title{
+  width: 100vw;
+  position: relative;
+  bottom: 40px;
+  font-size: 20px;
 }
 
 .thumbnail{
   width: 300px;
   height: auto;
+  padding-bottom: 20px;
 }
 
 button{

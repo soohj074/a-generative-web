@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arboretum | Tool</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+  <div id="navigation">
+    <a href="index.html"><img src="images/logo.png" style="height: 40px; width:auto;"></a>
+    <div class="page-links">
+        <a href="generator.html" class="link" style="text-decoration: underline; text-underline-position: under;">Generator</a>
+        <a href="gallery.html" class = "link">Gallery</a>
+    </div>
+  </div>
+
+  <div id="container">
+  <div id="menu">
+
+    <ul>
+
+      <li>
+        <label for="forest-type">Forest Type:
+          <select id="forestTypeInput" name="forest type">
+            <option value="tropical">Tropical</option>
+            <option value="temperate">Temperate</option>
+            <option value="boreal">Boreal</option>
+          </select>
+        </label>
+      </li>
+
+      <li>
+        <label for="season">Season:
+          <select id="seasonInput" name="season">
+            <option value="fall">Fall</option>
+            <option value="winter">Winter</option>
+            <option value="spring">Spring</option>
+            <option value="summer">Summer</option>
+          </select>
+        </label>
+      </li>
+
+      <li>
+        <label>Temperature
+          <input type="range" min="5" max="25" value="15" class="slider" id="temperatureInput">
+        </label>
+      </li>
+
+      <li>
+        <label>Age
+          <input type="range" min="30" max="100" value="1" class="slider" id="ageInput">
+        </label>
+      </li>
+
+    </ul>
+
+    <br>
+    <br>
+    <br>
+    <button type="button" id="generateButton">Generate</button>
+    <button type="button" id="saveButton">Save</button>
+
+  </div>
+
+  <div id="drawing"></div>
+</div>
+
+ 
+    <script src="sketch.js"></script>
+
+  </body>
+</html>
